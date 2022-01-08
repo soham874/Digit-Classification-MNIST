@@ -1,6 +1,11 @@
+import os
 from sklearn.datasets import fetch_openml
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+
+# Generic Paths
+MODEL_PATH = os.path.join("Models")
+IMAGE_PATH = os.path.join("Images")
 
 # Fetching the MNIST Dataset and loading it
 mnist  = fetch_openml('mnist_784',version=1,as_frame = False)
@@ -17,6 +22,7 @@ def plot_figure(X,y,some_digit):
 
     plt.imshow(some_digit_image, cmap = mpl.cm.binary, interpolation="nearest")
     plt.axis("off")
+    plt.savefig(os.path.join(IMAGE_PATH,"random_image.png"))
     plt.show()
 
 # Verifying the plot_figure function
