@@ -1,7 +1,9 @@
-import os
 from sklearn.datasets import fetch_openml
+
+import os
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Generic Paths
 MODEL_PATH = os.path.join("Models")
@@ -22,8 +24,13 @@ def plot_figure(X,y,some_digit):
 
     plt.imshow(some_digit_image, cmap = mpl.cm.binary, interpolation="nearest")
     plt.axis("off")
-    plt.savefig(os.path.join(IMAGE_PATH,"random_image.png"))
+    # plt.savefig(os.path.join(IMAGE_PATH,"random_image.png"))
     plt.show()
 
 # Verifying the plot_figure function
 plot_figure(X,y,356)
+
+y = y.astype(np.uint8)  # Converting the string type labels into integer type
+
+# By default, MNIST is shuffled and arranged into a test( first 60k isntances) and training set (last 10k instances)
+X_train, X_test, y_train, y_test = X[:60000], X[60000:], y[:60000], y[60000:]
