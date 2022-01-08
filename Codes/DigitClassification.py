@@ -1,1 +1,1 @@
-print("Hello World")
+from sklearn.datasets import fetch_openml
