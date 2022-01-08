@@ -10,3 +10,4 @@ def plot_figure(X,y,some_digit):
     plt.axis("off")
     # plt.savefig(os.path.join(IMAGE_PATH,"random_image.png"))
     plt.show()
+    return plt

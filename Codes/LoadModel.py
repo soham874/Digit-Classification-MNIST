@@ -1,5 +1,8 @@
 from Functions import *
+
 from sklearn.datasets import fetch_openml
+from numpy import savetxt
+from numpy import loadtxt
 
 import os
 import numpy as np
@@ -7,21 +10,34 @@ import numpy as np
 # Generic Paths
 MODEL_PATH = os.path.join("Models")
 IMAGE_PATH = os.path.join("Images")
+DATASETS = os.path.join("Datasets")
+
+if not os.path.isdir(MODEL_PATH):
+    os.makedirs(MODEL_PATH)
+if not os.path.isdir(IMAGE_PATH):
+    os.makedirs(IMAGE_PATH)
+if not os.path.isdir(DATASETS):
+    os.makedirs(DATASETS)  
 
 def create_train_and_test():
-    
+
+    if os.path.isfile(os.path.join(DATASETS,'X_train.csv')):
+        print("Datasets found. Loading...")
+        return loadtxt(os.path.join(DATASETS,'X_train.csv'), delimiter=','),loadtxt(os.path.join(DATASETS,'X_test.csv'), delimiter=','),loadtxt(os.path.join(DATASETS,'y_train.csv'), delimiter=','),loadtxt(os.path.join(DATASETS,'y_test.csv'), delimiter=',')
+
+    print("Datasets not found. Creating new sets...")
+
     # Fetching the MNIST Dataset and loading it
     mnist  = fetch_openml('mnist_784',version=1,as_frame = False)
     X,y = mnist["data"], mnist["target"]
-
-    # Verifying Size of dataset
-    print(X.shape)
-    print(y.shape)
-
-    # Verifying the plot_figure function
-    plot_figure(X,y,356)
-
     y = y.astype(np.uint8)  # Converting the string type labels into integer type
 
+    print("Saving datasets to local dir...")
+    savetxt(os.path.join(DATASETS,'X_train.csv'), X[:60000], delimiter=',')
+    savetxt(os.path.join(DATASETS,'X_test.csv'), X[60000:], delimiter=',')
+    savetxt(os.path.join(DATASETS,'y_train.csv'), y[:60000], delimiter=',')
+    savetxt(os.path.join(DATASETS,'y_test.csv'), y[60000:], delimiter=',')
+    print("done")
+    
     # By default, MNIST is shuffled and arranged into a test( first 60k isntances) and training set (last 10k instances)
     return X[:60000], X[60000:], y[:60000], y[60000:]

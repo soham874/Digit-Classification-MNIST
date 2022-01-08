@@ -6,8 +6,11 @@ from sklearn.model_selection import GridSearchCV
 
 X_train, X_test, y_train, y_test = create_train_and_test()
 
-param_grid = {
-    'weights':['uniform','distance'],
-    'n_neighbors':[1,5,10]
-}
+print("Total size of features and labels set")
+# Verifying Size of dataset
+print(X_train.shape)
+print(y_train.shape)
 
+print("Plotting random figure from dataset")
+# Verifying the plot_figure function
+plot_figure(X_train,y_train,356)
