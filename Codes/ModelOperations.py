@@ -101,16 +101,16 @@ def evaluate_model(model,name):
     # Confusion Matrix
     print("Evaluating confusion matrix..")
     conf_mat = confusion_matrix(y_test,y_pred)
-    file_object.write("Confusion matrix -> \n")
+    file_object.write("\nConfusion matrix -> \n")
     file_object.write(str(np.array(conf_mat)))
 
     conf_err(conf_mat,name)
 
     # Precision, Recall, F1
     print("Evaluating Precision, Recall, F1..")
-    file_object.write("Precision -> "+str(precision_score(y_test,y_pred,average="macro")))
-    file_object.write("Recall -> "+str(recall_score(y_test,y_pred,average="macro")))
-    file_object.write("F1 score -> "+str(f1_score(y_test,y_pred,average="macro")))
+    file_object.write("\nPrecision -> "+str(precision_score(y_test,y_pred,average="macro")))
+    file_object.write("\nRecall -> "+str(recall_score(y_test,y_pred,average="macro")))
+    file_object.write("\nF1 score -> "+str(f1_score(y_test,y_pred,average="macro")))
     
     print("Report stored in Model_performances.txt")
     file_object.close()
