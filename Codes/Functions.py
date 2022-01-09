@@ -1,6 +1,8 @@
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+
 import os
+import numpy as np
 
 IMAGE_PATH = os.path.join("Images")
 
@@ -19,4 +21,20 @@ def plot_figure(X,y,some_digit,name=""):
         plt.savefig(os.path.join(IMAGE_PATH,name))
 
     plt.show()
-    return plt
+
+# function to save confusion and its error matrix
+def conf_err(conf_mat,name):
+
+    if not os.path.isdir(os.path.join(IMAGE_PATH,name)):
+        os.makedirs(os.path.join(IMAGE_PATH,name))
+
+    # confusion matix
+    plt.matshow(conf_mat, cmap=plt.cm.gray)
+    plt.savefig(os.path.join(IMAGE_PATH,name,"Confusion_matrix.png"))
+
+    row_sums = conf_mat.sum(axis=1, keepdims=True)
+    norm_conf_mat = conf_mat / row_sums
+
+    np.fill_diagonal(norm_conf_mat, 0)
+    plt.matshow(norm_conf_mat, cmap=plt.cm.gray)
+    plt.savefig(os.path.join(IMAGE_PATH,name,"Error_matrix.png"))

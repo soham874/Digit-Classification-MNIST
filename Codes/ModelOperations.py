@@ -4,6 +4,7 @@ from sklearn.datasets import fetch_openml
 from numpy import savetxt
 from numpy import loadtxt
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import GridSearchCV
 
 import os
@@ -12,7 +13,6 @@ import numpy as np
 
 # Generic Paths
 MODEL_PATH = os.path.join("Models")
-IMAGE_PATH = os.path.join("Images")
 DATASETS = os.path.join("Datasets")
 
 if not os.path.isdir(MODEL_PATH):
@@ -66,3 +66,13 @@ def load_best_parameters(X,y,modelname):
 
 # Evaluate Confusion Matrix, Precision, Recall, F1 for model
 # Plot ROC, Precision vs Recall, P/R vs threshold, AUC for ROC
+def evaluate_model(model,X,y,name):
+    # Making predictions
+    y_pred = model.predict(X)
+    # Confusion Matrix
+    conf_mat = confusion_matrix(y,y_pred)
+    print("~~~~~~~~~ Model Evaluation ~~~~~~~~~~~~~~~~")
+    print("Confusion matrix -> ")
+    print(conf_mat)
+
+    conf_err(conf_mat,name)
