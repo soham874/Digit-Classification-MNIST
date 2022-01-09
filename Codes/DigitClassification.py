@@ -18,4 +18,4 @@ print(best_model)
 # Making predictions and evaluating the model, saving the paramters
 print("Fitting model....")
 best_model.fit(X_train,y_train)
-evaluate_model(best_model,"KNClassifier_neighbour_4_weight_distance")
+evaluate_model(best_model,"KNClassifier_augmented_neighbour_4_weight_distance")

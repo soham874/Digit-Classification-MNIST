@@ -3,6 +3,7 @@ from Functions import *
 from sklearn.datasets import fetch_openml
 from numpy import savetxt
 from numpy import loadtxt
+from scipy.ndimage.interpolation import shift
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
 from sklearn.model_selection import GridSearchCV
@@ -20,6 +21,11 @@ if not os.path.isdir(MODEL_PATH):
 if not os.path.isdir(DATASETS):
     os.makedirs(DATASETS)  
 
+def shift_image(image, dx, dy):
+    image = image.reshape((28, 28))
+    shifted_image = shift(image, [dy, dx], cval=0, mode="constant")
+    return shifted_image.reshape([-1])
+
 # Function to create the testing and training dataset
 def create_train_and_test():
 
@@ -34,15 +40,28 @@ def create_train_and_test():
     X,y = mnist["data"], mnist["target"]
     y = y.astype(np.uint8)  # Converting the string type labels into integer type
 
+    X_train, y_train = X[:60000],y[:60000]
+
+    X_train_augmented = [image for image in X_train]
+    y_train_augmented = [label for label in y_train]
+
+    for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+        for image, label in zip(X_train, y_train):
+            X_train_augmented.append(shift_image(image, dx, dy))
+            y_train_augmented.append(label)
+
+    X_train = np.array(X_train_augmented)
+    y_train = np.array(y_train_augmented)
+
     print("Saving datasets to local dir...")
-    savetxt(os.path.join(DATASETS,'X_train.csv'), X[:60000], delimiter=',')
+    savetxt(os.path.join(DATASETS,'X_train.csv'), X_train, delimiter=',')
     savetxt(os.path.join(DATASETS,'X_test.csv'), X[60000:], delimiter=',')
-    savetxt(os.path.join(DATASETS,'y_train.csv'), y[:60000], delimiter=',')
+    savetxt(os.path.join(DATASETS,'y_train.csv'), y_train, delimiter=',')
     savetxt(os.path.join(DATASETS,'y_test.csv'), y[60000:], delimiter=',')
     print("done")
     
     # By default, MNIST is shuffled and arranged into a test( first 60k isntances) and training set (last 10k instances)
-    return X[:60000], y[:60000]
+    return X_train, y_train
 
 # Find the best parameters
 def load_best_parameters(X,y,modelname):
