@@ -87,6 +87,9 @@ def load_best_parameters(X,y,modelname):
 # Only for binary -> ROC, Precision vs Recall, P/R vs threshold, AUC for ROC
 def evaluate_model(model,name):
 
+    file_object = open('Model_Performances.txt', 'a')
+    file_object.write("\nEvaluation for model "+name+"\n")
+
     # Making predictions
     print("~~~~~~~~~~~~~~~~~~~~~~ Model Evaluation ~~~~~~~~~~~~~~~~~~~")
     print("Loading test set...")
@@ -96,14 +99,18 @@ def evaluate_model(model,name):
     y_pred = model.predict(X_test)
 
     # Confusion Matrix
+    print("Evaluating confusion matrix..")
     conf_mat = confusion_matrix(y_test,y_pred)
-    
-    print("Confusion matrix -> ")
-    print(conf_mat)
+    file_object.write("Confusion matrix -> \n")
+    file_object.write(str(np.array(conf_mat)))
 
     conf_err(conf_mat,name)
 
     # Precision, Recall, F1
-    print("Precision ->",precision_score(y_test,y_pred,average="macro"))
-    print("Recall ->",recall_score(y_test,y_pred,average="macro"))
-    print("F1 score ->",f1_score(y_test,y_pred,average="macro"))
+    print("Evaluating Precision, Recall, F1..")
+    file_object.write("Precision -> "+str(precision_score(y_test,y_pred,average="macro")))
+    file_object.write("Recall -> "+str(recall_score(y_test,y_pred,average="macro")))
+    file_object.write("F1 score -> "+str(f1_score(y_test,y_pred,average="macro")))
+    
+    print("Report stored in Model_performances.txt")
+    file_object.close()
