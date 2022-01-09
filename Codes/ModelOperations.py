@@ -4,8 +4,8 @@ from sklearn.datasets import fetch_openml
 from numpy import savetxt
 from numpy import loadtxt
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, precision_recall_curve
-from sklearn.model_selection import GridSearchCV, cross_val_predict
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
+from sklearn.model_selection import GridSearchCV
 
 import os
 import joblib
@@ -65,7 +65,7 @@ def load_best_parameters(X,y,modelname):
     return grid_seach_result.best_estimator_
 
 # Evaluate Confusion Matrix, Precision, Recall, F1 for model
-# Plot ROC, Precision vs Recall, P/R vs threshold, AUC for ROC
+# Only for binary -> ROC, Precision vs Recall, P/R vs threshold, AUC for ROC
 def evaluate_model(model,name):
 
     # Making predictions
@@ -85,6 +85,6 @@ def evaluate_model(model,name):
     conf_err(conf_mat,name)
 
     # Precision, Recall, F1
-    print("Precision ->",precision_score(y_test,y_pred))
-    print("Recall ->",recall_score(y_test,y_pred))
-    print("F1 score ->",f1_score(y_test,y_pred))
+    print("Precision ->",precision_score(y_test,y_pred,average="macro"))
+    print("Recall ->",recall_score(y_test,y_pred,average="macro"))
+    print("F1 score ->",f1_score(y_test,y_pred,average="macro"))
