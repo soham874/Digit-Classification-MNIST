@@ -17,8 +17,6 @@ DATASETS = os.path.join("Datasets")
 
 if not os.path.isdir(MODEL_PATH):
     os.makedirs(MODEL_PATH)
-if not os.path.isdir(IMAGE_PATH):
-    os.makedirs(IMAGE_PATH)
 if not os.path.isdir(DATASETS):
     os.makedirs(DATASETS)  
 
@@ -65,3 +63,6 @@ def load_best_parameters(X,y,modelname):
     print(grid_seach_result.best_score_)
     joblib.dump(grid_seach_result.best_estimator_,os.path.join(MODEL_PATH,modelname))
     return grid_seach_result.best_estimator_
+
+# Evaluate Confusion Matrix, Precision, Recall, F1 for model
+# Plot ROC, Precision vs Recall, P/R vs threshold, AUC for ROC
