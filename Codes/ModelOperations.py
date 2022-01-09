@@ -66,12 +66,19 @@ def load_best_parameters(X,y,modelname):
 
 # Evaluate Confusion Matrix, Precision, Recall, F1 for model
 # Plot ROC, Precision vs Recall, P/R vs threshold, AUC for ROC
-def evaluate_model(model,X,y,name):
+def evaluate_model(model,name):
+    
     # Making predictions
-    y_pred = model.predict(X)
+    print("~~~~~~~~~~~~~~~~~~~~~~ Model Evaluation ~~~~~~~~~~~~~~~~~~~")
+    print("Loading test set...")
+    X_test = loadtxt(os.path.join(DATASETS,'X_test.csv'), delimiter=',')
+    y_test = loadtxt(os.path.join(DATASETS,'y_test.csv'), delimiter=',')
+    print("Predicting labels using model....")
+    y_pred = model.predict(X_test)
+
     # Confusion Matrix
-    conf_mat = confusion_matrix(y,y_pred)
-    print("~~~~~~~~~ Model Evaluation ~~~~~~~~~~~~~~~~")
+    conf_mat = confusion_matrix(y_test,y_pred)
+    
     print("Confusion matrix -> ")
     print(conf_mat)
 

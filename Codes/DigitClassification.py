@@ -16,4 +16,6 @@ print("Model found with parameters ->")
 print(best_model)
 
 # Making predictions and evaluating the model, saving the paramters
-evaluate_model(best_model,X_train,y_train,"KNClassifier_neighbour_4_weight_distance")
+print("Fitting model....")
+best_model.fit(X_train,y_train)
+evaluate_model(best_model,"KNClassifier_neighbour_4_weight_distance")
