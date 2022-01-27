@@ -4,7 +4,7 @@ from sklearn.datasets import fetch_openml
 from numpy import savetxt
 from numpy import loadtxt
 from scipy.ndimage.interpolation import shift
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
 from sklearn.model_selection import GridSearchCV
 
@@ -70,12 +70,13 @@ def load_best_parameters(X,y,modelname):
         return joblib.load(os.path.join(MODEL_PATH,modelname))
 
     param_grid = {
-        'weights':['uniform','distance'],
-        'n_neighbors':[3,4,5]
+        'C':[0.001,0.1,3],
+        'kernel':['linear','poly','rbf'],
+        'degree':[3,5]
     }
 
-    knn_clf = KNeighborsClassifier()
-    grid_seach_result = GridSearchCV(knn_clf , param_grid , cv=5, verbose=20)
+    svc_clf = SVC(coef0=1)
+    grid_seach_result = GridSearchCV(svc_clf , param_grid , cv=5, verbose=20)
     grid_seach_result.fit(X, y)
 
     print(grid_seach_result.best_params_)
@@ -110,7 +111,7 @@ def evaluate_model(model,name):
     print("Evaluating Precision, Recall, F1..")
     file_object.write("\nPrecision -> "+str(precision_score(y_test,y_pred,average="macro")))
     file_object.write("\nRecall -> "+str(recall_score(y_test,y_pred,average="macro")))
-    file_object.write("\nF1 score -> "+str(f1_score(y_test,y_pred,average="macro")))
+    file_object.write("F1 score -> "+str(f1_score(y_test,y_pred,average="macro")))
     
     print("Report stored in Model_performances.txt")
     file_object.close()

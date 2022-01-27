@@ -9,9 +9,9 @@ print(X_train.shape)
 print(y_train.shape)
 
 # Loading the best model
-best_model = load_best_parameters(X_train,y_train,"BestKNClassifier.pkl")
+best_model = load_best_parameters(X_train,y_train,"BestSVC.pkl")
 print("Model found with parameters ->")
 print(best_model)
 
 # Making predictions and evaluating the model, saving the paramters
-evaluate_model(best_model,"KNClassifier_augmented_neighbour_4_weight_distance")
+evaluate_model(best_model,"SVM_Classifer")
