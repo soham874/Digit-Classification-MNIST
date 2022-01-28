@@ -42,17 +42,6 @@ def create_train_and_test():
 
     X_train, y_train = X[:60000],y[:60000]
 
-    X_train_augmented = [image for image in X_train]
-    y_train_augmented = [label for label in y_train]
-
-    for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-        for image, label in zip(X_train, y_train):
-            X_train_augmented.append(shift_image(image, dx, dy))
-            y_train_augmented.append(label)
-
-    X_train = np.array(X_train_augmented)
-    y_train = np.array(y_train_augmented)
-
     print("Saving datasets to local dir...")
     savetxt(os.path.join(DATASETS,'X_train.csv'), X_train, delimiter=',')
     savetxt(os.path.join(DATASETS,'X_test.csv'), X[60000:], delimiter=',')
@@ -70,8 +59,8 @@ def load_best_parameters(X,y,modelname):
         return joblib.load(os.path.join(MODEL_PATH,modelname))
 
     param_grid = {
-        'C':[0.001,0.1,3],
-        'kernel':['linear','poly','rbf'],
+        #'C':[0.001,0.1,3],
+        'kernel':['poly','rbf'],
         'degree':[3,5]
     }
 
