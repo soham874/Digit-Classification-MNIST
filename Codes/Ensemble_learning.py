@@ -16,8 +16,10 @@ svm_clf = SVC(probability=True)          # Support vector classifier
 voting_clf = VotingClassifier( estimators=[('lr', extra_clf), ('rf', rnd_clf), ('svc', svm_clf)], voting='soft')
 voting_clf.fit(X_train, y_train)
 
+evaluate_model(voting_clf,"Soft_Voting_Classifier")
+
 # Outputting the accuracies of each model seperately
-for clf in (extra_clf, rnd_clf, svm_clf, voting_clf):
-    clf.fit(X_train, y_train)
-    y_pred = clf.predict(x_val)
-    print(clf.__class__.__name__," -> ",accuracy_score(y_val, y_pred))
+# for clf in (extra_clf, rnd_clf, svm_clf, voting_clf):
+#    clf.fit(X_train, y_train)
+#    y_pred = clf.predict(x_val)
+#    print(clf.__class__.__name__," -> ",accuracy_score(y_val, y_pred))
