@@ -4,9 +4,9 @@ from sklearn.datasets import fetch_openml
 from numpy import savetxt
 from numpy import loadtxt
 from scipy.ndimage.interpolation import shift
-from sklearn.svm import SVC
-from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score
 from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
 
 import os
 import joblib
@@ -100,7 +100,7 @@ def evaluate_model(model,name):
     print("Evaluating Precision, Recall, F1..")
     file_object.write("\nPrecision -> "+str(precision_score(y_test,y_pred,average="macro")))
     file_object.write("\nRecall -> "+str(recall_score(y_test,y_pred,average="macro")))
-    file_object.write("F1 score -> "+str(f1_score(y_test,y_pred,average="macro")))
+    file_object.write("\nF1 score -> "+str(f1_score(y_test,y_pred,average="macro")))
     
     print("Report stored in Model_performances.txt")
     file_object.close()
