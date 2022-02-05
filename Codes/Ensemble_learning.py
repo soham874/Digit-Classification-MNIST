@@ -10,10 +10,10 @@ X_train, x_val, y_train, y_val = train_test_split(X_train,y_train,test_size=0.2)
 
 extra_clf = ExtraTreesClassifier()        # extra forest model
 rnd_clf = RandomForestClassifier()        # random forest classifier
-svm_clf = SVC(probability=False)          # Support vector classifier
+svm_clf = SVC(probability=True)          # Support vector classifier
 
 # specifying all models on which the voting should be done
-voting_clf = VotingClassifier( estimators=[('lr', extra_clf), ('rf', rnd_clf), ('svc', svm_clf)], voting='hard')
+voting_clf = VotingClassifier( estimators=[('lr', extra_clf), ('rf', rnd_clf), ('svc', svm_clf)], voting='soft')
 voting_clf.fit(X_train, y_train)
 
 # Outputting the accuracies of each model seperately
