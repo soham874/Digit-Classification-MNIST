@@ -28,8 +28,10 @@ svm_clf = SVC(probability=True)          # Support vector classifier
 
 stack_clf = StackingClassifier( 
     estimators=[('lr', extra_clf), ('rf', rnd_clf), ('svc', svm_clf)], # all classifiers in the ensemble
-    final_estimator = SVC(),                                           # blender model, final classifer
-    n_jobs = -1
+    final_estimator = SVC(),       # blender model, final classifer
+    n_jobs = -1,
+    cv = 5,                        # cross validation folds         
+    verbose = 20
     )
 stack_clf.fit(X_train, y_train)
 
