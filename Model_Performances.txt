@@ -77,6 +77,7 @@ Confusion matrix ->
 Precision -> 0.9794372922926116
 Recall -> 0.9793139905313805
 F1 score -> 0.9793628888137131
+
 Evaluation for model Random_Forest_Classification
 
 Confusion matrix -> 
@@ -93,3 +94,20 @@ Confusion matrix ->
 Precision -> 0.9693035503315134
 Recall -> 0.9692963519698988
 F1 score -> 0.9692825657923587
+
+Evaluation for model PCA_Reduced_Random_Forest_Classification
+
+Confusion matrix -> 
+[[ 964    0    3    1    0    3    6    1    1    1]
+ [   0 1120    3    4    0    1    3    0    3    1]
+ [   9    0  969   14    6    2    2    6   22    2]
+ [   1    0    6  955    1   15    2   10   17    3]
+ [   2    2    5    0  933    2   10    1    4   23]
+ [   5    0    3   30    6  823    9    1    9    6]
+ [  10    2    3    0    4    4  935    0    0    0]
+ [   1    8   16    4    7    0    0  965    1   26]
+ [   5    0   10   20   11   17    5    6  892    8]
+ [   6    5    2   14   25    6    1    9    7  934]]
+Precision -> 0.9485219784496668
+Recall -> 0.9483890896148367
+F1 score -> 0.9483688151089791

@@ -7,6 +7,7 @@ from scipy.ndimage.interpolation import shift
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
+from sklearn.decomposition import PCA
 
 import os
 import joblib
@@ -15,6 +16,8 @@ import numpy as np
 # Generic Paths
 MODEL_PATH = os.path.join("Models")
 DATASETS = os.path.join("Datasets")
+
+pca = PCA(n_components=0.95)
 
 if not os.path.isdir(MODEL_PATH):
     os.makedirs(MODEL_PATH)
@@ -86,7 +89,7 @@ def evaluate_model(model,name):
     X_test = loadtxt(os.path.join(DATASETS,'X_test.csv'), delimiter=',')
     y_test = loadtxt(os.path.join(DATASETS,'y_test.csv'), delimiter=',')
     print("Predicting labels using model....")
-    y_pred = model.predict(X_test)
+    y_pred = model.predict(pca.transform(X_test))
 
     # Confusion Matrix
     print("Evaluating confusion matrix..")
