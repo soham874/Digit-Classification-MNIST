@@ -1,6 +1,6 @@
 from Functions import *
 from ModelOperations import *
-from sklearn.manifold import TSNE
+# from sklearn.manifold import TSNE
 # from sklearn.decomposition import PCA
 from sklearn.manifold import LocallyLinearEmbedding
 from sklearn.preprocessing import MinMaxScaler
@@ -42,9 +42,11 @@ X_train, y_train = create_train_and_test()
 
 # using tSNE to reduce dimension of dataset down to 2
 if not os.path.isfile(os.path.join(DATASETS,'X_train_reduced_2.csv')):
-    dr_model = TSNE(n_components=2,n_jobs=-1)
+    # dr_model = TSNE(n_components=2,n_jobs=-1)
     # dr_model = PCA(n_components=2)
-    # dr_model = LocallyLinearEmbedding(n_components=2,n_jobs=-1)
+    pca = PCA(n_components=0.95)
+    X_train = pca.fit_transform(X_train)
+    dr_model = LocallyLinearEmbedding(n_components=2,n_jobs=-1)
     X_reduced = dr_model.fit_transform(X_train)
     print(X_reduced.shape)
     # savetxt(os.path.join(DATASETS,'X_train_reduced_2.csv'), X_reduced, delimiter=',')
