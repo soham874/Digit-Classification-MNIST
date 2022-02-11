@@ -2,7 +2,7 @@ from Functions import *
 from ModelOperations import *
 # from sklearn.manifold import TSNE
 # from sklearn.decomposition import PCA
-from sklearn.manifold import LocallyLinearEmbedding
+from sklearn.manifold import LocallyLinearEmbedding, MDS
 from sklearn.preprocessing import MinMaxScaler
 from matplotlib.offsetbox import AnnotationBbox, OffsetImage
 
@@ -44,13 +44,15 @@ X_train, y_train = create_train_and_test()
 if not os.path.isfile(os.path.join(DATASETS,'X_train_reduced_2.csv')):
     # dr_model = TSNE(n_components=2,n_jobs=-1)
     # dr_model = PCA(n_components=2)
-    pca = PCA(n_components=0.95)
-    X_train = pca.fit_transform(X_train)
-    dr_model = LocallyLinearEmbedding(n_components=2,n_jobs=-1)
-    X_reduced = dr_model.fit_transform(X_train)
+    # pca = PCA(n_components=0.95)
+    # X_train = pca.fit_transform(X_train)
+    # dr_model = LocallyLinearEmbedding(n_components=2,n_jobs=-1)
+    m = 5000
+    dr_model = MDS(n_components=2,n_jobs=-1,verbose=100)
+    X_reduced = dr_model.fit_transform(X_train[:m])
     print(X_reduced.shape)
     # savetxt(os.path.join(DATASETS,'X_train_reduced_2.csv'), X_reduced, delimiter=',')
 else:
     X_reduced = loadtxt(os.path.join(DATASETS,'X_train_reduced_2.csv'), delimiter=',')
     
-plot_digits(X_reduced,y_train)
+plot_digits(X_reduced,y_train[:m])
